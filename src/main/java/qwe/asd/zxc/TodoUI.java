@@ -63,6 +63,7 @@ public class TodoUI extends UI {
 
     private void setupLayout() {
         layout = new VerticalLayout();
+        layout.setSpacing(true);
         layout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         setContent(layout);
     }
