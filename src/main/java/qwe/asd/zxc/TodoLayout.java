@@ -4,6 +4,8 @@ import com.vaadin.data.Binder;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
+import java.util.Arrays;
+
 /**
  * Created by papillon on 7/17/2017.
  */
@@ -11,7 +13,7 @@ public class TodoLayout extends HorizontalLayout {
     private final CheckBox done;
     private final TextField text;
 
-    public TodoLayout(Todo todo) {
+    public TodoLayout(Todo todo,TodoChangeListner changeListner) {
         setSpacing(true);
         setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         done = new CheckBox();
@@ -23,5 +25,11 @@ public class TodoLayout extends HorizontalLayout {
         binder.setBean(todo);
         addComponents(done,text);
         setExpandRatio(text,1);
+
+        Arrays.asList(done,text).forEach(field -> {
+            field.addValueChangeListener(change -> {
+               changeListner.todoChanged(todo);
+            });
+        });
     }
 }

@@ -1,6 +1,7 @@
 package qwe.asd.zxc;
 
 import com.vaadin.annotations.Theme;
+import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
@@ -31,6 +32,9 @@ public class TodoUI extends UI {
 
     private void addActionButton() {
         Button delete = new Button("Delete completed");
+        delete.addClickListener(click -> {
+           todoList.deleteCompleted();
+        });
         layout.addComponent(delete);
     }
 
@@ -52,6 +56,14 @@ public class TodoUI extends UI {
         formLayout.addComponents(task,add);
         formLayout.setExpandRatio(task,1);
         layout.addComponent(formLayout);
+
+        add.addClickListener(click -> {
+           todoList.add(new Todo(task.getValue()));
+           task.clear();
+           task.focus();
+        });
+        task.focus();
+        add.setClickShortcut(ShortcutAction.KeyCode.ENTER);
     }
 
     private void addHeader() {
